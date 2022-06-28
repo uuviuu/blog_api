@@ -1,0 +1,10 @@
+controllers:
+    resource: ../../src/Controller/
+    type: annotation
+    prefix: '/posts'
+    name_prefix: 'posts_'
+    trailing_slash_on_root: false
+
+kernel:
+    resource: ../../src/Kernel.php
+    type: annotation
