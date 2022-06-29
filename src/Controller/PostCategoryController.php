@@ -3,6 +3,9 @@
 namespace App\Controller;
 
 use App\Service\PostCategoryService;
+use OpenApi\Annotations as OA;
+use App\Model\PostCategoryListResponse;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,9 +22,13 @@ class PostCategoryController extends AbstractController
     }
 
     /**
-     * Выводит все категории из таблицы PostCategory.
+     * @OA\Response(
+     *    response=200, 
+     *    description="Return post categories",
+     *    @Model(type=PostCategoryListResponse::class)
+     * )
      *
-     * @Route("/api/vi/blog/categories", name="categories", methods={"GET"})
+     * @Route("/api/v1/blog/categories", name="categories", methods={"GET"})
      */
     public function categories(): Response
     {

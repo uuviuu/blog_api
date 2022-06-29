@@ -1,0 +1,19 @@
+{
+    "items": [
+        {
+            "iD": 4,
+            "title": "Cat",
+            "slug": "cat"
+        },
+        {
+            "iD": 3,
+            "title": "Data",
+            "slug": "data"
+        },
+        {
+            "iD": 5,
+            "title": "Dog",
+            "slug": "dog"
+        }
+    ]
+}
