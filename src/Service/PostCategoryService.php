@@ -21,7 +21,9 @@ class PostCategoryService
         $categories = $this->postCategoryRepository->findBy([], ['title' => Criteria::ASC]);
         $items = array_map(
             fn (PostCategory $postCategory) => new PostCategoryListItem(
-                $postCategory->getId(), $postCategory->getTitle(), $postCategory->getSlug()
+                $postCategory->getId(), 
+                $postCategory->getTitle(), 
+                $postCategory->getSlug()
             ),
             $categories
         );

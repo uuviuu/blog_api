@@ -14,7 +14,7 @@ class PostCategoryListItem
         $this->slug = $slug;
     }
 
-    public function getID(): int
+    public function getId(): int
     {
         return $this->id;
     }

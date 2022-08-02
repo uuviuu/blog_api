@@ -21,21 +21,15 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
-    public function add(Post $entity, bool $flush = false): void
+    /**
+     * @param integer $id
+     * @return Post[]
+     */
+    public function findPostsByCategoryId(int $id): array
     {
-        $this->getEntityManager()->persist($entity);
+        $query = $this->_em->createQuery('SELECT b FROM App\Entity\Post b WHERE :categoryId MEMBER OF b.categories');
+        $query->setParameter('categoryId', $id);
 
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
-
-    public function remove(Post $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        return $query->getResult();
     }
 }

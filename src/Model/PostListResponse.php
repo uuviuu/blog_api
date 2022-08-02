@@ -2,15 +2,15 @@
 
 namespace App\Model;
 
-class PostCategoryListResponse
+class PostListResponse
 {
     /**
-     * @var PostCategoryListItem[]
+     * @var PostListItem[]
      */
     private array $items;
 
     /**
-     * @param PostCategoryListItem[] $items
+     * @param PostListItem[] $items
      */
     public function __construct(array $items)
     {
@@ -18,7 +18,7 @@ class PostCategoryListResponse
     }
 
     /**
-     * @return PostCategoryListItem[]
+     * @return PostListItem[]
      */
     public function getItems(): array
     {

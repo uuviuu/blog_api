@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Service\PostCategoryService;
 use OpenApi\Annotations as OA;
+use App\Service\PostCategoryService;
 use App\Model\PostCategoryListResponse;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Component\HttpFoundation\Response;
