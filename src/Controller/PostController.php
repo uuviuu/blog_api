@@ -2,54 +2,63 @@
 
 namespace App\Controller;
 
-use App\Entity\Post;
-use App\Repository\PostRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use OpenApi\Annotations as OA;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use App\Service\PostService;
+use App\Model\PostListResponse;
+use App\Exeption\PostCategoryNotFoundExeption;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/**
- * @Route("/posts", name="posts_")
- */
+// /**
+//  * @Route("/posts", name="posts_")
+//  */
 class PostController extends AbstractController
 {
-    private PostRepository $postRepository;
-    private EntityManagerInterface $em;
+    private PostService $postService;
 
-    public function __construct(PostRepository $postRepository, EntityManagerInterface $em)
+    public function __construct(PostService $postService)
     {
-        $this->postRepository = $postRepository;
-        $this->em = $em;
+        $this->postService = $postService;
     }
 
     /**
-     * Выводит все посты из таблицы Post.
+     * @OA\Response(
+     *    response=200, 
+     *    description="Return posts inside a category",
+     *    @Model(type=PostListResponse::class)
+     * )
      *
-     * @Route("", name="index", methods={"GET"})
+     * @Route("/api/v1/category/{id}/posts", name="index", methods={"GET"})
      */
-    public function index(): Response
+    public function index(int $id): Response
     {
-        $posts = $this->postRepository->findAll();
-
-        return $this->json($posts);
+        try{
+            $posts = $this->postService->getPostsByCategories($id);
+            return $this->json($posts);
+        }catch (PostCategoryNotFoundExeption $exeption){
+            throw new HttpException($exeption->getCode(), $exeption->getMessage());
+        }
+        
     }
 
-    /**
-     * Создает новый пост в таблице Post.
-     *
-     * @Route("/create", name="create", methods={"GET", "POST"})
-     */
-    public function create(): Response
-    {
-        $post = new Post();
-        $post->setTitle('Create Post');
+    // /**
+    //  * Создает новый пост в таблице Post.
+    //  *
+    //  * @Route("/create", name="create", methods={"GET", "POST"})
+    //  */
+    // public function create(): Response
+    // {
+    //     $post = new Post();
+    //     $post->setTitle('Create Post');
 
-        $this->em->persist($post);
-        $this->em->flush();
+    //     $this->em->persist($post);
+    //     $this->em->flush();
 
-        return new Response();
-    }
+    //     return new Response();
+    // }
 
     //     return $this->renderForm('blog/create.html.twig', [
     //         'form' => $form,

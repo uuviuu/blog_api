@@ -4,17 +4,17 @@ namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class PostCategoryControllerTest extends WebTestCase
+class PostControllerTest extends WebTestCase
 {
-    public function testCategories(): void
+    public function testPostsByCategory(): void
     {
         $client = static::createClient();
-        $client->request('GET', '/api/v1/blog/categories');
+        $client->request('GET', '/api/v1/category/4/posts');
         $responseContent = $client->getResponse()->getContent();
 
         $this->assertResponseIsSuccessful();
         $this->assertJsonStringEqualsJsonFile(
-            __DIR__ . '/responses/PostCategoryControllerTest_testCategories.json',
+            __DIR__ . '/responses/PostControllerTest_testPostsByCategory.json',
             $responseContent
         );
     }

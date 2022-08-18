@@ -1,0 +1,16 @@
+{
+    "items": [
+        {
+            "id": 2,
+            "title": "Android Title",
+            "slug": "android-title",
+            "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Android_robot_head.svg/182px-Android_robot_head.svg.png",
+            "authors": [
+                "Niko Logviny",
+                "Timoty"
+            ],
+            "publicationDate": 1658880000,
+            "meap": false
+        }
+    ]
+}

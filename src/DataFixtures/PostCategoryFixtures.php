@@ -8,12 +8,35 @@ use Doctrine\Persistence\ObjectManager;
 
 class PostCategoryFixtures extends Fixture
 {
+    public const ANDROID_CATEGORY = 'android';
+    public const DEVICES_CATEGORY = 'devices';
+    // public const DATA_CATEGORY = 'data';
+
     public function load(ObjectManager $manager): void
     {
-        $manager->persist((new PostCategory())->setTitle('Data')->setSlug('data'));
-        $manager->persist((new PostCategory())->setTitle('Cat')->setSlug('cat'));
-        $manager->persist((new PostCategory())->setTitle('Dog')->setSlug('dog'));
+        $categories = [
+            self::DEVICES_CATEGORY => (new PostCategory())
+                                        ->setTitle('Devices')
+                                        ->setSlug('devices'),
+            self::ANDROID_CATEGORY => (new PostCategory())
+                                        ->setTitle('Android')
+                                        ->setSlug('android'),     
+            // self::DATA_CATEGORY => (new PostCategory())
+            //                             ->setTitle('Data')
+            //                             ->setSlug('data'),
+        ];
 
+        foreach ($categories as $category){
+            $manager->persist($category);
+        }
+
+        $manager->persist((new PostCategory())
+            ->setTitle('Data')
+            ->setSlug('data'));
         $manager->flush();
+
+        foreach ($categories as $code => $category){
+            $this->addReference($code, $category);
+        }
     }
 }
