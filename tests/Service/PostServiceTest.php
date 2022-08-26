@@ -8,13 +8,13 @@ use App\Model\PostListItem;
 use App\Entity\PostCategory;
 use App\Service\PostService;
 use App\Model\PostListResponse;
-use PHPUnit\Framework\TestCase;
+use App\Tests\AbstractTestCase;
 use App\Repository\PostRepository;
 use App\Repository\PostCategoryRepository;
 use App\Exeption\PostCategoryNotFoundExeption;
 use Doctrine\Common\Collections\ArrayCollection;
 
-class PostServiceTest extends TestCase
+class PostServiceTest extends AbstractTestCase
 {
     public function testGetPostByCategoryNotFound(): void
     {
@@ -54,8 +54,7 @@ class PostServiceTest extends TestCase
 
     private function createPostEntity(): Post
     {
-        return (new Post)
-            ->setId(123)
+        $post = (new Post)
             ->setTitle('SetPost')
             ->setSlug('set-post')
             ->setImage('https://d5nunyagcicgy.cloudfront.net/external_assets/hero_examples/hair_beach_v391182663/original.jpeg')
@@ -63,6 +62,9 @@ class PostServiceTest extends TestCase
             ->setPublicationDate(new DateTime('2022-07-29'))
             ->setMeap(false)
             ->setCategories(new ArrayCollection());
+        $this->setEntityId($post, 123);
+        
+        return $post; 
     }
 
     private function createPostItemModel(): PostListItem

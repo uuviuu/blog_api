@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\PostCategory;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
@@ -20,22 +21,12 @@ class PostCategoryRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, PostCategory::class);
     }
-
-    public function add(PostCategory $entity, bool $flush = false): void
+    /**
+     * @return  BookCategory[]
+     */
+    public function findAllSortedByTitle(): array
     {
-        $this->getEntityManager()->persist($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        return $this->findBy([], ['title' => Criteria::ASC]);
     }
 
-    public function remove(PostCategory $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
 }

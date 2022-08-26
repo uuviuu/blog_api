@@ -6,7 +6,6 @@ use App\Entity\PostCategory;
 use App\Model\PostCategoryListItem;
 use App\Model\PostCategoryListResponse;
 use App\Repository\PostCategoryRepository;
-use Doctrine\Common\Collections\Criteria;
 
 class PostCategoryService
 {
@@ -18,7 +17,7 @@ class PostCategoryService
 
     public function getCategories(): PostCategoryListResponse 
     {
-        $categories = $this->postCategoryRepository->findBy([], ['title' => Criteria::ASC]);
+        $categories = $this->postCategoryRepository->findAllSortedByTitle();
         $items = array_map(
             fn (PostCategory $postCategory) => new PostCategoryListItem(
                 $postCategory->getId(), 

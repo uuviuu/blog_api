@@ -35,3 +35,16 @@ services:
      - 8104:3306
    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci 
    container_name: project_db
+
+  db_test:
+   image: mysql:8.0-oracle
+   restart: always
+   volumes:
+     - ./tmp/db:/var/lib/mysql
+   environment: 
+    MYSQL_DATABASE: blog_api 
+    MYSQL_ROOT_PASSWORD: root
+   ports:
+     - 8105:3306
+   command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci 
+   container_name: project_db_test
